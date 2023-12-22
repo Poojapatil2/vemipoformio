@@ -57,6 +57,45 @@ const Builder = () => {
   const onFormChange = (schema) => {
     setSchema({ ...schema, components: [...schema.components] });
   };
+
+  const customComponents = {
+    customTextField: {
+      title: 'First Name',
+      group: 'custom',
+      icon: 'fa-solid fa-user',
+      template: 'customTextField',
+      schema: {
+        type: 'textfield',
+        key: 'firstName',
+        label: 'First Name ',
+        input: true,
+      },
+    },
+    customMiddleNameTextField: {
+      title: 'Middle Name',
+      group: 'custom',
+      icon: 'fa-solid fa-user',
+      template: 'customTextField',
+      schema: {
+        type: 'textfield',
+        key: 'middleName',
+        label: 'Middle Name ',
+        input: true,
+      },
+    },
+    customLastNameTextField: {
+      title: 'Last Name',
+      group: 'custom',
+      icon: 'fa-solid fa-user',
+      template: 'customTextField',
+      schema: {
+        type: 'textfield',
+        key: 'laastName',
+        label: 'Last Name ',
+        input: true,
+      },
+    },
+  };
   return (
     <>
       <div style={{ display: 'flex' }}>
@@ -72,16 +111,16 @@ const Builder = () => {
       <FormBuilder
         form={jsonSchema}
         onChange={onFormChange}
-        // options={{
-        //   builder: {
-        //     custom: {
-        //       basic: {
-        //         default: true,
-        //         components: require('./formbuilder.json')
-        //       }
-        //     }
-        //   }
-        // }}
+        options={{
+          builder: {
+            custom: {
+              title: 'Custom',
+              default: true,
+              weight: 0,
+              components: customComponents,
+            },
+          },
+        }}
       />
       {/* <Card title="Form JSON Schema" className="my-4">
         <Card.Body>
