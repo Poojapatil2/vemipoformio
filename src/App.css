@@ -12,7 +12,7 @@
   align-items: center;
 }
 
-.formio-brand > * {
+.formio-brand>* {
   margin-right: 5px;
 }
 
@@ -28,4 +28,64 @@
 div.spacer {
   margin: 0.5rem 0;
   line-height: 0;
+}
+
+.firstname-container {
+  display: flex;
+}
+
+.firstname-style {
+  border: 1px solid #aaa;
+}
+
+.formio-component-prefix,
+.formio-component-suffix,
+.formio-component-widget\.type,
+.formio-component-inputMask,
+.formio-component-displayMask,
+.formio-component-applyMaskOn,
+.formio-component-allowMultipleMasks,
+.formio-component-customClass,
+.formio-component-tabindex,
+.formio-component-autocomplete,
+.formio-component-hidden,
+.formio-component-hideLabel,
+.formio-component-showWordCount,
+.formio-component-showCharCount,
+.formio-component-mask,
+.formio-component-autofocus,
+.formio-component-spellcheck,
+.formio-component-disabled,
+.formio-component-tableView,
+.formio-component-modalEdit
+{
+display: none;
+}
+
+
+.nav-link[href="#api"],
+.nav-link[href="#conditional"],
+.nav-link[href="#logic"],
+.nav-link[href="#layout"] {
+  display: none;
+}
+
+.formio-component-persistent,
+.formio-component-inputFormat,
+.formio-component-protected,
+.formio-component-dbIndex,
+.formio-component-redrawOn,
+.formio-component-clearOnHide,
+.formio-component-customDefaultValuePanel,
+.formio-component-calculateValuePanel,
+.formio-component-calculateServer,
+.formio-component-allowCalculateOverride {
+  display: none;
+}
+
+.formio-component-validate\.customMessage,
+.formio-component-custom-validation-js,
+.formio-component-json-validation-json, 
+.formio-component-errors {
+  display: none;
 }

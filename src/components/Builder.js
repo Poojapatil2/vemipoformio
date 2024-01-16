@@ -1,38 +1,27 @@
 import { Form, FormBuilder } from "@formio/react";
-import { Components } from "@formio/react";
 import { useState } from "react";
-import { Card, Modal } from "react-bootstrap";
-import FirstName from "./FirstName";
-import ReactJson from "react-json-view";
+import { Modal } from "react-bootstrap";
 import "../styles/Builder.css";
 import axios from "axios";
+import customComponents from "./CustomComponents";
+import patientInfo from "./PatientInfo";
+import contactInfo from "./ContactInformation";
+import responsiblePartyInfo from "./ResponsiblePartyInfo";
 
 const Builder = () => {
-  
 
-  // Components.setComponent('firstName', FirstName);
-
+  // json for the form builder components
   const [jsonSchema, setSchema] = useState({
-    // "display": "form",
-    // "type": "form",
-    components: [
-      // {
-      //   label: "First Name",
-      //   placeholder: "First Name",
-      //   key: "firstName",
-      //   tableView: true,
-      //   input: true, 
-      //   "components": []
-      // }
-    ],
+    components: []
   });
   const [showModal, setShowModal] = useState(false);
   const [formName, setFormName] = useState("");
-
+  
   const handleCloseModal = () => {
     setShowModal(false);
   }
 
+// function for saving the created form as a template
   const handleSaveForm = () => {
     const body = {
       formName: formName,
@@ -45,6 +34,7 @@ const Builder = () => {
     axios.post(`http://13.59.130.104:8080/form`, body) 
     .then((res) => {
       setShowModal(false);
+      setFormName("");
       setSchema({components: []})
       console.log('res', res)
     })
@@ -53,49 +43,11 @@ const Builder = () => {
     })
   }
 
-
+  //function for getting components inthe drag and drop zone 
   const onFormChange = (schema) => {
     setSchema({ ...schema, components: [...schema.components] });
   };
 
-  const customComponents = {
-    customTextField: {
-      title: 'First Name',
-      group: 'custom',
-      icon: 'fa-solid fa-user',
-      template: 'customTextField',
-      schema: {
-        type: 'textfield',
-        key: 'firstName',
-        label: 'First Name ',
-        input: true,
-      },
-    },
-    customMiddleNameTextField: {
-      title: 'Middle Name',
-      group: 'custom',
-      icon: 'fa-solid fa-user',
-      template: 'customTextField',
-      schema: {
-        type: 'textfield',
-        key: 'middleName',
-        label: 'Middle Name ',
-        input: true,
-      },
-    },
-    customLastNameTextField: {
-      title: 'Last Name',
-      group: 'custom',
-      icon: 'fa-solid fa-user',
-      template: 'customTextField',
-      schema: {
-        type: 'textfield',
-        key: 'laastName',
-        label: 'Last Name ',
-        input: true,
-      },
-    },
-  };
   return (
     <>
       <div style={{ display: 'flex' }}>
@@ -113,21 +65,39 @@ const Builder = () => {
         onChange={onFormChange}
         options={{
           builder: {
-            custom: {
+            premium : false,
+            // premiumComponents :  {
+            //   title : 'Premium',
+            //   default: false,
+
+            // },
+            customBasic: {
               title: 'Custom',
-              default: true,
-              weight: 0,
+              default: false,
+              weight: 10,
               components: customComponents,
+            },
+            customPatient: {
+              title: 'Patient Info',
+              default: false,
+              weight: 10,
+              components: patientInfo
+            },
+            customContact: {
+              title: 'Contact Info',
+              default: false,
+              weight: 10,
+              components: contactInfo
+            },
+            customResponsible: {
+              title: 'Responsible Party Info',
+              default: false,
+              weight: 10,
+              components: responsiblePartyInfo
             },
           },
         }}
       />
-      {/* <Card title="Form JSON Schema" className="my-4">
-        <Card.Body>
-          <Card.Title className="text-center">As JSON Schema</Card.Title>
-          <ReactJson src={jsonSchema} name={null} collapsed={true}></ReactJson>
-        </Card.Body>
-      </Card> */}
       {
         <Modal className="my-4" show={showModal} onHide={handleCloseModal} closebutton={false}>
           <Modal.Body>
@@ -135,7 +105,8 @@ const Builder = () => {
             <Form form={jsonSchema} />
             <button onClick={handleSaveForm} className="btn btn-primary">Save Form</button>
           </Modal.Body>
-        </Modal>}
+        </Modal>
+      }
     </>
   );
 };
