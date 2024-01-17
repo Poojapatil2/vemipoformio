@@ -179,7 +179,7 @@ const NestedDataComponent = ({ components, updateFormData, formData = {}, patien
                     return <>
                         <div className="form-group has-feedback formio-component formio-component-email formio-component-email">
                             <p className="col-form-label">{e.label} {e.validate.required ? <span className="field-required"></span> : ""}</p>
-                            <input className="form-control" type="email" required={e.validate.required} defaultValue={patientData ? patientData[e.key] : ""} onChange={el => handleChange(el.target.value, e.label)}></input>
+                            <input className="form-control" type="email" required={e.validate.required} defaultValue={patientData ? patientData[e.key] : ""} onChange={el => handleChange(el.target.value, e.key)}></input>
                         </div>
                     </>
 
@@ -207,13 +207,24 @@ const NestedDataComponent = ({ components, updateFormData, formData = {}, patien
                                 <button className="btn btn-sm btn-light signature-pad-refresh" onClick={handleSignatureRefresh}><i className="fa fa-refresh"></i></button>
                                 <SignatureCanvas
                                     ref={signatureRef}
-                                    canvasProps={{ className: 'signature-pad-canvas', style: { height: `${e.height}`, backgroundColor: `${e.backgroundColor}`, width: `${e.width}`, maxWidth: `${e.maxWidth}`, minWidth: `${e.minWidth}` } }}
+                                    canvasProps={{
+                                        className: 'signature-pad-canvas',
+                                        style: {
+                                            height: `${e.height}`,
+                                            backgroundColor: `${e.backgroundColor}`,
+                                            width: `${e.width}`,
+                                            maxWidth: `${e.maxWidth}`,
+                                            minWidth: `${e.minWidth}`,
+                                        },
+                                    }}
                                     onEnd={() => {
                                         // Handle the signature data when the user finishes drawing
                                         const signatureData = signatureRef.current.toDataURL();
                                         handleChange(signatureData, e.key);
                                     }}
-                                    defaultValue={patientData ? patientData[e.key] : ""}
+                                    onLoad={()=> { patientData && patientData[e.key] &&
+                                        <img src={patientData[e.key]}/>
+                                    }}
                                 />
                             </div>
                             <div className="signature-pad-footer" >{e.footer}</div>
@@ -356,8 +367,8 @@ const NestedDataComponent = ({ components, updateFormData, formData = {}, patien
                                     </li>
                                 </ul>
                                 <div className="fileSelector">
-                                    <i className="fa fa-cloud-upload"></i> Drop files to attach,or{' '}  
-                                    <a className="browse" onClick={(event) =>{ event.preventDefault(); handleChange(event.target.files?.[0], e.key);}}>browse</a>
+                                    <i className="fa fa-cloud-upload"></i> Drop files to attach,or{' '}
+                                    <a className="browse" onClick={(event) => { event.preventDefault(); handleChange(event.target.files?.[0], e.key); }}>browse</a>
                                 </div>
                                 {/* You can display additional information or feedback here */}
                             </div>

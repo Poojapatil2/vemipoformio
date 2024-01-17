@@ -2,7 +2,7 @@ import { Form, FormBuilder } from "@formio/react";
 import { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import "../styles/Builder.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import customComponents from "./CustomComponents";
 import patientInfo from "./PatientInfo";
@@ -22,6 +22,7 @@ const EditBuilder = () => {
 
   // Accessing specific search parameters
   const formId = searchParams.get('formId');
+  console.log('formId', formId)
 
   // function for getting all the details of the particular form
   useEffect(() => {
@@ -70,11 +71,20 @@ const EditBuilder = () => {
       })
   }
 
+  const navigate= useNavigate();
+  const handleBack =() => {
+    navigate('/')
+  }
+
+
   return (
     <>
       <div style={{ display: 'flex' }}>
         <div>
-          <button className="btn btn-primary" onClick={() => setShowModal(true)} style={{ margin: '20px' }}>Preview</button></div>
+          <button className="btn btn-primary" onClick={() => setShowModal(true)} style={{ margin: '20px' }}>Preview</button>
+          <button className="btn btn-primary" onClick={handleBack} style={{ margin: '20px' }}>Back to Home</button>
+          </div>
+          
         <div style={{ display: 'flex', marginTop: '20px', marginLeft: '250px' }}>
           <span style={{ width: '150px', fontWeight: 'bold' }}>Form Name: </span>
           <input className="form-control md-6" value={formName} onChange={(e) => setFormName(e.target.value)} />

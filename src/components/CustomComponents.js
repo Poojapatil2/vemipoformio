@@ -34,17 +34,17 @@ const customComponents = {
         input: true,
       }
     },
-    customUpload: {
-      title: 'File Upload',
-      group: 'custom',
-      icon: 'fa fa-file',
-      schema: {
-        type: 'file',
-        key: 'customUpload',
-        label: 'File Upload',
-        input: true,
-      },
-    }
+    // customUpload: {
+    //   title: 'File Upload',
+    //   group: 'custom',
+    //   icon: 'fa fa-file',
+    //   schema: {
+    //     type: 'file',
+    //     key: 'customUpload',
+    //     label: 'File Upload',
+    //     input: true,
+    //   },
+    // }
   };
 
   export default customComponents;

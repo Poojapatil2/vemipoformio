@@ -1,5 +1,6 @@
 import { Form, FormBuilder } from "@formio/react";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { Modal } from "react-bootstrap";
 import "../styles/Builder.css";
 import axios from "axios";
@@ -48,12 +49,17 @@ const Builder = () => {
     setSchema({ ...schema, components: [...schema.components] });
   };
 
+  const navigate = useNavigate()
+  const handleShowForm = () => {
+      navigate(`/form-list`)
+  }
+
   return (
     <>
       <div style={{ display: 'flex' }}>
         <div>
           <button className="btn btn-primary" onClick={() => setShowModal(true)} style={{ margin: '20px' }}>Preview</button>
-          <a href="/form-list" className="btn btn-primary" style={{ margin: '20px' }}>Show Form List</a>
+          <button  className="btn btn-primary" onClick={handleShowForm} style={{ margin: '20px' }}>Show Form List</button>
           </div>
         <div style={{ display: 'flex', marginTop: '20px', marginLeft: '250px' }}>
           <span style={{ width: '150px', fontWeight: 'bold' }}>Form Name: </span>

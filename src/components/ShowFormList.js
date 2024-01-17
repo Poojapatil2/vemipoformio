@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ShowFormList = () => {
     const [formList, setFormList] = useState([]);
@@ -15,6 +15,7 @@ const ShowFormList = () => {
 
     // Accessing specific search parameters
     const formId = searchParams.get('formId');
+  
 
 
     const handleCloseModal = () => {
@@ -52,6 +53,10 @@ const ShowFormList = () => {
   
     }
 
+    const navigate = useNavigate()
+    const handleEdit = (formId) => {
+        navigate(`/form-edit?formId=${formId}`)
+    }
 
     return (
         <>
@@ -67,7 +72,7 @@ const ShowFormList = () => {
                     <p>{ele.formName}</p>
                     {/* <p>{ele.formId}</p> */}
                     <div style={{ display: 'flex' }}>
-                        <a href={`/form-edit?formId=${ele.formId}`}>Edit</a>
+                        <button className="btn btn-primary" style={{ margin: '5px' }} onClick={()=>handleEdit(ele.formId)}>Edit</button>
                         <button className="btn btn-primary" style={{ margin: '5px' }} onClick={() => { setShowModal(true); setNewFormId(ele.formId); setNewFormName(ele.formName) }}>Send Form</button>
                     </div>
                 </div>
