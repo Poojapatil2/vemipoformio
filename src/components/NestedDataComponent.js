@@ -141,13 +141,19 @@ const NestedDataComponent = ({ components, updateFormData, formData = {}, patien
                 case "radio":
                     return <>
                         <div className="form-group has-feedback formio-component formio-component-radio formio-component-radio">
-                            <p className="col-form-label">{e.label} {e.validate.required ? <span className="field-required"></span> : ""}</p>
-                            {e.values.map((ele, i) =>
-                                <label style={{ padding: '5px' }}>
-                                    <input type="radio" name={e.id} required={e.validate.required} value={ele.value} defaultChecked={patientData && patientData[e.key] === ele.value}
-                                        onChange={el => handleChange(el.target.value, e.key)} />  {ele.label}
-                                </label>
-                            )}
+                            <div className="field-wrapper">
+                                <div className="field-label" style={{flex: '100', marginRight: '5%'}}>
+                                <p className="col-form-label">{e.label} {e.validate.required ? <span className="field-required"></span> : ""}</p>
+                                </div>  
+                                <div className="field-content"> 
+                                {e.values.map((ele, i) =>
+                                        <label style={{ padding: '5px' }} className={`form-check-label label-position-${e.optionsLabelPosition}`} >
+                                            <input type="radio" name={e.id} required={e.validate.required} value={ele.value} defaultChecked={patientData && patientData[e.key] === ele.value}
+                                                onChange={el => handleChange(el.target.value, e.key)} />  {ele.label}
+                                        </label>
+                                )}
+                                  </div>
+                            </div>
                         </div>
                     </>
 
@@ -173,6 +179,7 @@ const NestedDataComponent = ({ components, updateFormData, formData = {}, patien
                             </label>
                         </div>
                     </>
+
 
 
                 case "email":
@@ -222,8 +229,9 @@ const NestedDataComponent = ({ components, updateFormData, formData = {}, patien
                                         const signatureData = signatureRef.current.toDataURL();
                                         handleChange(signatureData, e.key);
                                     }}
-                                    onLoad={()=> { patientData && patientData[e.key] &&
-                                        <img src={patientData[e.key]}/>
+                                    onLoad={() => {
+                                        patientData && patientData[e.key] &&
+                                            <img src={patientData[e.key]} />
                                     }}
                                 />
                             </div>
@@ -373,6 +381,47 @@ const NestedDataComponent = ({ components, updateFormData, formData = {}, patien
                                 {/* You can display additional information or feedback here */}
                             </div>
                         </>
+                    );
+
+                case "htmlelement":
+                    return (
+                        <div key={i}>
+                            {e.tag !== 'hr'?<e.tag> {e.content}</e.tag>: <e.tag></e.tag>}
+                        </div>
+                    );
+
+                case "content":
+                    return (
+                        <div key={i}>
+                            {/* Render HTML content */}
+                            <div dangerouslySetInnerHTML={{ __html: e.html }} />
+                        </div>
+                    );
+
+                case "table":
+                    return (
+                        <div className="table-responsive formio-component formio-component-table formio-component-table  no-top-border-table">
+                            <table key={i} className="table">
+                                <tbody>
+                                    {/* Loop through rows */}
+                                    {e.rows.map((rowData, rowIndex) => (
+                                        <tr key={rowIndex}>
+                                            {/* Loop through columns */}
+                                            {rowData.map((cellData, colIndex) => (
+                                                <td key={colIndex}>
+                                                    {/* Render cell content */}
+                                                    <NestedDataComponent
+                                                        components={cellData.components}
+                                                        updateFormData={updateFormData}
+                                                        formData={formData}
+                                                        patientData={patientData} />
+                                                </td>
+                                            ))}
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     );
             }
         })}

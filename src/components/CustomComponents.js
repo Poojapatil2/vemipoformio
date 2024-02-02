@@ -33,7 +33,7 @@ const customComponents = {
         label: 'Last Name ',
         input: true,
       }
-    },
+    },  
     // customUpload: {
     //   title: 'File Upload',
     //   group: 'custom',

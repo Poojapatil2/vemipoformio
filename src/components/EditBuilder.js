@@ -8,6 +8,8 @@ import customComponents from "./CustomComponents";
 import patientInfo from "./PatientInfo";
 import contactInfo from "./ContactInformation";
 import responsiblePartyInfo from "./ResponsiblePartyInfo";
+import advancedComponents from "./AdvancedComponents";
+import layoutComponents from "./LayoutComponents";
 
 const EditBuilder = () => {
   const [jsonSchema, setSchema] = useState({
@@ -96,11 +98,9 @@ const EditBuilder = () => {
         options={{
           builder: {
             premium : false,
-            // premium :  {
-            //   title : 'Premium',
-            //   default: false,
-
-            // },
+            data : false,
+            advanced: false,
+            layout: false,
             customBasic: {
               title: 'Custom',
               default: false,
@@ -125,11 +125,21 @@ const EditBuilder = () => {
               weight: 10,
               components: responsiblePartyInfo
             },
+            customAdvanced : {
+              title: 'Advanced',
+              weight: 10,
+              components: advancedComponents
+            },
+            customLayout : {
+              title: 'Layout',
+              weight: 10,
+              components: layoutComponents
+            }
           },
         }}
       />
       {
-        <Modal className="my-4" show={showModal} onHide={handleCloseModal} closebutton={false}>
+        <Modal className= "modal-lg" show={showModal} onHide={handleCloseModal} closebutton={false}>
           <Modal.Body>
             <Modal.Title className="text-center">{formName}</Modal.Title>
             <Form form={jsonSchema} />

@@ -8,6 +8,8 @@ import customComponents from "./CustomComponents";
 import patientInfo from "./PatientInfo";
 import contactInfo from "./ContactInformation";
 import responsiblePartyInfo from "./ResponsiblePartyInfo";
+import advancedComponents from "./AdvancedComponents";
+import layoutComponents from "./LayoutComponents";
 
 const Builder = () => {
 
@@ -72,11 +74,9 @@ const Builder = () => {
         options={{
           builder: {
             premium : false,
-            // premiumComponents :  {
-            //   title : 'Premium',
-            //   default: false,
-
-            // },
+            data : false,
+            advanced: false,
+            layout: false,
             customBasic: {
               title: 'Custom',
               default: false,
@@ -101,6 +101,16 @@ const Builder = () => {
               weight: 10,
               components: responsiblePartyInfo
             },
+            customAdvanced : {
+              title: 'Advanced',
+              weight: 10,
+              components: advancedComponents
+            },
+            customLayout : {
+              title: 'Layout',
+              weight: 10,
+              components: layoutComponents
+            }
           },
         }}
       />
