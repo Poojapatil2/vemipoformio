@@ -24,7 +24,7 @@ const ShowFormList = () => {
 
     //function for displaying all the saved formlist
     useEffect(() => {
-        axios.get("http://13.59.130.104:8080/form?formName=")
+        axios.get("http://3.23.40.210:8081/form?formName=")
             .then(res => {
                 console.log("res", res.data.data)
                 setFormList(res.data.data)
@@ -41,7 +41,7 @@ const ShowFormList = () => {
             patientName: name,
             formUrl:  result
         }
-        axios.post(`http://13.59.130.104:8080/form/send`, body)
+        axios.post(`http://3.23.40.210:8081/form/send`, body)
         .then((res) => {
             setShowModal(false);
             setName("");

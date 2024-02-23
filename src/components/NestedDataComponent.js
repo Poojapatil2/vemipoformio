@@ -55,7 +55,7 @@ const NestedDataComponent = ({ components, updateFormData, formData = {}, patien
                 formDataWithSubmissionStatus
 
         }
-        axios.put(`http://13.59.130.104:8080/form/formid/${formId}/patient`, body)
+        axios.put(`http://3.23.40.210:8081/form/formid/${formId}/patient`, body)
             .then((response) => {
                 console.log(response.data, formData, 'Form Saved and resume')
                 updateFormData(formData)

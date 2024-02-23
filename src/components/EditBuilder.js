@@ -30,7 +30,7 @@ const EditBuilder = () => {
   useEffect(() => {
     console.log("locatop", formId)
     if (formId) {
-      axios.get(`http://13.59.130.104:8080/form/formid/${formId}`)
+      axios.get(`http://3.23.40.210:8081/form/formid/${formId}`)
       .then(res => {
         console.log("res", res.data.data);
         setFormName(res.data.data.formName)
@@ -61,7 +61,7 @@ const EditBuilder = () => {
       companyId: "3",
       components: jsonSchema.components
     }
-    axios.put(`http://13.59.130.104:8080/form/formid/${formId}`, body)
+    axios.put(`http://3.23.40.210:8081/form/formid/${formId}`, body)
       .then((res) => {
         setShowModal(false);
         setSchema({ components: [] })

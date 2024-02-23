@@ -34,7 +34,7 @@ const Builder = () => {
       companyId: "3",
       components: jsonSchema.components
     }
-    axios.post(`http://13.59.130.104:8080/form`, body) 
+    axios.post(`http://3.23.40.210:8081/form`, body) 
     .then((res) => {
       setShowModal(false);
       setFormName("");

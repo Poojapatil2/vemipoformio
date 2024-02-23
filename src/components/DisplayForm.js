@@ -24,7 +24,7 @@ const DisplayForm = () => {
     useEffect(() => {
         console.log("locatop", formId)
         if (formId) {
-            axios.get(`http://13.59.130.104:8080/form/formid/${formId}`)
+            axios.get(`http://3.23.40.210:8081/form/formid/${formId}`)
                 .then(res => {
                     console.log("res", res.data.data)
                     setSchema(res.data.data)
