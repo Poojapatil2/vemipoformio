@@ -374,9 +374,22 @@ const NestedDataComponent = ({ components, updateFormData, formData = {}, patien
                                         </div>
                                     </li>
                                 </ul>
+                                {/* <div className="custom-file-select">
+                                    <label htmlFor="file-upload" className="custom-file-label">
+                                        <i className="fa fa-cloud-upload"></i> Drop files to attach,or{' '}
+                                    </label>
+                                    <input
+                                        type="file"
+                                        id="file-upload"
+                                        className="input-file"
+                                        onChange={(event) => { event.preventDefault(); handleChange(event.target.files?.[0], e.key); }}
+                                    />
+                                </div> */}
                                 <div className="fileSelector">
                                     <i className="fa fa-cloud-upload"></i> Drop files to attach,or{' '}
-                                    <a className="browse" onClick={(event) => { event.preventDefault(); handleChange(event.target.files?.[0], e.key); }}>browse</a>
+                                    <div className="custom-file-select"><input type="file" className="input-file" onChange={(event) => { event.preventDefault(); handleChange(event.target.files[0], e.key); }} /></div>
+                                    
+                                    <span className="browselink">browse</span>
                                 </div>
                                 {/* You can display additional information or feedback here */}
                             </div>

@@ -40,9 +40,9 @@ const DisplayForm = () => {
     return (
         <>
             <div style={{maxWidth: '1300px', display: "flex", flexDirection: 'column', justifyContent: 'center', alignItems:'center'}}>
-                <div style={{ display: 'flex', marginTop: '20px' }}>
-                    <span style={{ width: '105px', fontWeight: 'bold' }}> Form Name : </span> {jsonSchema.formName}
-                </div>
+                {/* <div style={{ display: 'flex', marginTop: '20px', fontWeight: 'bold' }}>
+                    <span style={{ width: '105px', fontWeight: 'bold', textAlign: 'center' }}>  </span> <h3>{jsonSchema.formName}</h3> 
+                </div> */}
                 <div className="container">
                     <NestedDataComponent patientData={jsonSchema.patientData} components={jsonSchema.components} updateFormData={handleUpdateFormData}
                         formData={formData} />

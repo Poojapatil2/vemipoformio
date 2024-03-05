@@ -7,9 +7,10 @@ const customComponents = {
       icon: 'fa-solid fa-user',
       schema: {
         type: 'textfield',
-        key: 'firstName',
+        key: 'officeEmail',
         label: 'First Name ',
         input: true,
+        defaultValue: "Test"
       },
     },
     middleName: {
@@ -34,17 +35,19 @@ const customComponents = {
         input: true,
       }
     },  
-    // customUpload: {
-    //   title: 'File Upload',
-    //   group: 'custom',
-    //   icon: 'fa fa-file',
-    //   schema: {
-    //     type: 'file',
-    //     key: 'customUpload',
-    //     label: 'File Upload',
-    //     input: true,
-    //   },
-    // }
+    customUpload: {
+      title: 'File Upload',
+      group: 'custom',
+      icon: 'fa fa-file',
+      schema: {
+        type: 'file',
+        key: 'customUpload',
+        label: 'File Upload',
+        input: true,
+      },
+    },
   };
+
+  console.log("test")
 
   export default customComponents;

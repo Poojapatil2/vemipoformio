@@ -19,21 +19,30 @@ const EditBuilder = () => {
   const [showModal, setShowModal] = useState(false);
   const [formName, setFormName] = useState(jsonSchema.formName);
   const [editBuilder, setEditBuilder] = useState(false);
+  const [customData, setCustomData] = useState({});
+  const [loading, setLoading] = useState(true); // Added loading 
+  const [modalClosed, setModalClosed] = useState(false);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
   // Accessing specific search parameters
   const formId = searchParams.get('formId');
-  console.log('formId', formId)
+  const flag = searchParams.get('flag');
+  // console.log(flag,'formId', formId)
 
   // function for getting all the details of the particular form
   useEffect(() => {
-    console.log("locatop", formId)
+    // console.log("locatop", formId)
     if (formId) {
       axios.get(`http://3.23.40.210:8081/form/formid/${formId}`)
       .then(res => {
-        console.log("res", res.data.data);
-        setFormName(res.data.data.formName)
+        // console.log("res", res.data.data);
+        if(flag === 'edit') {
+          setFormName(res.data.data.formName)
+        } else {
+          setFormName("")
+        }
+       
         setSchema(res.data.data)
       })
       .catch(err => console.log("error", err))
@@ -44,6 +53,7 @@ const EditBuilder = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
+    setModalClosed(true);
   }
 
   const onFormChange = (schema) => {
@@ -51,8 +61,48 @@ const EditBuilder = () => {
     setSchema({ ...schema, components: [...schema.components] });
   };
 
+  // for displaying the user defined costant
+  useEffect(() => {
+    axios.get(`http://3.23.40.210:8081/form/constants`)
+      .then((response) => {
+        // console.log(response.data, "constants");
+        const tempObj = {
+          premium: false,
+        };
+        response.data.data.forEach(item => {
+          let htmlValue = '';
+          if (item.dataType.toLowerCase() === 'content') {
+            htmlValue = item.defaultValue ? `<img class="test" src=${item.defaultValue}></img>` : '';
+          }
+          tempObj[item.fieldKey] = {
+            title: item.title,
+            group: 'custom',
+            icon: 'fa-solid fa-user',
+            schema: {
+              type: item.dataType.toLowerCase(),
+              key: item.fieldKey,
+              label: item.title,
+              input: true,
+              defaultValue: item.defaultValue,
+              html: htmlValue
+            }
+          };
+        });
+        setCustomData(tempObj);
+        setLoading(false); // Set loading to false after fetching data
+        // console.log(tempObj, customData, "variable");
+      })
+      .catch((error) => console.log(error, "error constant"))
+  }, [modalClosed, loading]);
+
+
   //function for saving the changes done in the  existing form template.
   const handleSaveEditForm = () => {
+    if (formName.trim() === '') {
+      alert('Please enter a form name.');
+      setShowModal(false)
+      return;
+    }
     const body = {
       formName: formName,
       formDescription: "This is consent form",
@@ -61,7 +111,8 @@ const EditBuilder = () => {
       companyId: "3",
       components: jsonSchema.components
     }
-    axios.put(`http://3.23.40.210:8081/form/formid/${formId}`, body)
+    if(flag === 'copy') {
+      axios.post(`http://3.23.40.210:8081/form`, body)
       .then((res) => {
         setShowModal(false);
         setSchema({ components: [] })
@@ -71,6 +122,19 @@ const EditBuilder = () => {
       .catch((err) => {
         console.log(err, 'err')
       })
+    } else 
+    { 
+      axios.put(`http://3.23.40.210:8081/form/formid/${formId}`, body)
+      .then((res) => {
+        setShowModal(false);
+        setSchema({ components: [] })
+        setFormName("");
+        console.log('res', res)
+      })
+      .catch((err) => {
+        console.log(err, 'err')
+      })}
+   
   }
 
   const navigate= useNavigate();
@@ -92,52 +156,60 @@ const EditBuilder = () => {
           <input className="form-control md-6" value={formName} onChange={(e) => setFormName(e.target.value)} />
         </div>
       </div>
-      <FormBuilder
-        form={jsonSchema}
-        onChange={onFormChange}
-        options={{
-          builder: {
-            premium : false,
-            data : false,
-            advanced: false,
-            layout: false,
-            customBasic: {
-              title: 'Custom',
-              default: false,
-              weight: 10,
-              components: customComponents,
+      {!loading && (
+        <FormBuilder
+          form={jsonSchema}
+          onChange={onFormChange}
+          options={{
+            builder: {
+              premium: false,
+              data: false,
+              advanced: false,
+              layout: false,
+              customBasic: {
+                title: 'Custom',
+                default: false,
+                weight: 10,
+                components: customComponents,
+              },
+              customConstant: {
+                title: 'Variables',
+                default: false,
+                weight: 10,
+                components: customData,
+              },
+              customPatient: {
+                title: 'Patient Info',
+                default: false,
+                weight: 10,
+                components: patientInfo
+              },
+              customContact: {
+                title: 'Contact Info',
+                default: false,
+                weight: 10,
+                components: contactInfo
+              },
+              customResponsible: {
+                title: 'Responsible Party Info',
+                default: false,
+                weight: 10,
+                components: responsiblePartyInfo
+              },
+              customAdvanced: {
+                title: 'Advanced',
+                weight: 10,
+                components: advancedComponents
+              },
+              customLayout: {
+                title: 'Layout',
+                weight: 10,
+                components: layoutComponents
+              }
             },
-            customPatient: {
-              title: 'Patient Info',
-              default: false,
-              weight: 10,
-              components: patientInfo
-            },
-            customContact: {
-              title: 'Contact Info',
-              default: false,
-              weight: 10,
-              components: contactInfo
-            },
-            customResponsible: {
-              title: 'Responsible Party Info',
-              default: false,
-              weight: 10,
-              components: responsiblePartyInfo
-            },
-            customAdvanced : {
-              title: 'Advanced',
-              weight: 10,
-              components: advancedComponents
-            },
-            customLayout : {
-              title: 'Layout',
-              weight: 10,
-              components: layoutComponents
-            }
-          },
-        }}
-      />
+          }}
+        />
+      )}
       {
         <Modal className= "modal-lg" show={showModal} onHide={handleCloseModal} closebutton={false}>
           <Modal.Body>

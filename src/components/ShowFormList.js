@@ -54,29 +54,33 @@ const ShowFormList = () => {
     }
 
     const navigate = useNavigate()
-    const handleEdit = (formId) => {
-        navigate(`/form-edit?formId=${formId}`)
+    const handleEdit = (formId, flag) => {
+        navigate(`/form-edit?formId=${formId}&flag=${flag}`)
     }
 
     return (
         <>
-            <div style={{ paddingTop: '10px' }}>
-                <h3 style={{ paddingTop: '20px', paddingBottom: '20px', textAlign: 'center' }}>FORM LIST</h3>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-evenly', border: '1px solid #ccc', marginLeft: "50px", marginRight: '50px', maxWidth: '1200px' }}>
-                <h5>Form Name</h5>
-                <h5>Action</h5>
-            </div>
-            {formList.map((ele, i) =>
-                <div key={i} style={{ display: "flex", justifyContent: 'space-evenly', border: '1px solid #ccc', marginLeft: "50px", marginRight: '50px', maxWidth: '1200px' }}>
-                    <p>{ele.formName}</p>
-                    {/* <p>{ele.formId}</p> */}
-                    <div style={{ display: 'flex' }}>
-                        <button className="btn btn-primary" style={{ margin: '5px' }} onClick={()=>handleEdit(ele.formId)}>Edit</button>
-                        <button className="btn btn-primary" style={{ margin: '5px' }} onClick={() => { setShowModal(true); setNewFormId(ele.formId); setNewFormName(ele.formName) }}>Send Form</button>
-                    </div>
-                </div>
-            )}
+           <table style={{ marginLeft: "50px", marginRight: '50px', maxWidth: '1200px', borderCollapse: 'collapse', width: '100%' }}>
+    <thead>
+        <tr style={{ border: '1px solid #ccc' }}>
+            <th style={{ padding: '10px', textAlign: 'center' }}>Form Name</th>
+            <th style={{ padding: '10px', textAlign: 'center' }}>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {formList.map((ele, i) =>
+            <tr key={i} style={{ border: '1px solid #ccc' }}>
+                <td style={{ padding: '10px',textAlign: 'center' }}>{ele.formName}</td>
+                <td style={{ padding: '10px',textAlign: 'center' }}>
+                    <button className="btn btn-primary" style={{ margin: '5px' }} onClick={()=>handleEdit(ele.formId, "edit")}>Edit</button>
+                    <button className="btn btn-primary" style={{ margin: '5px' }} onClick={() => { setShowModal(true); setNewFormId(ele.formId); setNewFormName(ele.formName) }}>Send</button>
+                    <button className="btn btn-primary" style={{ margin: '5px' }} onClick={()=>handleEdit(ele.formId, "copy")}>Copy</button>
+                </td>
+            </tr>
+        )}
+    </tbody>
+</table>
+
 
             {
                 <Modal className="my-4" show={showModal} onHide={handleCloseModal} closebutton={false}>

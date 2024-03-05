@@ -7,7 +7,7 @@ const layoutComponents = {
       type: 'htmlelement',
       key: 'label',
       tag: 'label',
-      content: '',
+      content: 'CHEER DENTAL',
       attrs: [
         {
           attr: '',
