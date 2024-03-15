@@ -49,7 +49,6 @@ div.spacer {
 .formio-component-tabindex,
 .formio-component-autocomplete,
 .formio-component-hidden,
-.formio-component-hideLabel,
 .formio-component-showWordCount,
 .formio-component-showCharCount,
 .formio-component-mask,
@@ -88,4 +87,53 @@ display: none;
 .formio-component-json-validation-json, 
 .formio-component-errors {
   display: none;
+}
+
+
+.custom-file-select, .browse {
+  position: relative;
+  display: inline-block;
+}
+
+.input-file {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 999;
+}
+
+.browselink{
+  position: relative;
+  right: 100px;
+  text-decoration: underline;
+  color: #0a7ea3;
+}
+
+.custom-file-label {
+  display: inline-block;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+
+.custom-file-label::after {
+  content: 'Browse';
+  font-size: 14px;
+}
+
+/* Style the label when a file is selected */
+.custom-file-label::before {
+  content: attr(data-text);
+  display: inline-block;
+  width: calc(100% - 70px); /* Adjust according to your design */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
