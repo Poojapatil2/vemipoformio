@@ -74,7 +74,7 @@ const NestedDataComponent = ({ components, updateFormData, formData = {}, patien
 
                         <div className="form-group has-feedback formio-component formio-component-textarea formio-component-textArea">
                             <p className="col-form-label">{e.label} {e.validate.required ? <span className="field-required"></span> : ""}</p>
-                            <textarea className="form-control" required={e.validate.required} defaultValue={patientData ? patientData[e.key] : ""} onChange={el => handleChange(el.target.value, e.key)}></textarea>
+                            <textarea className="form-control" required={e.validate.required} defaultValue={patientData ? patientData[e.key] : e.defaultValue || ""} onChange={el => handleChange(el.target.value, e.key)}></textarea>
                         </div>
 
                     </>
@@ -84,7 +84,7 @@ const NestedDataComponent = ({ components, updateFormData, formData = {}, patien
                     return <>
                         <div className="form-group has-feedback formio-component formio-component-textfield formio-component-textField  required">
                             <p className="col-form-label">{e.label} {e.validate.required ? <span className="field-required"></span> : ""}</p>
-                            <input className="form-control" required={e.validate.required} defaultValue={patientData ? patientData[e.key] : ""} onChange={el => handleChange(el.target.value, e.key)}></input>
+                            <input className="form-control" required={e.validate.required} defaultValue={patientData ? patientData[e.key] : e.defaultValue || ""} onChange={el => handleChange(el.target.value, e.key)}></input>
                         </div>
                     </>
 
@@ -92,7 +92,7 @@ const NestedDataComponent = ({ components, updateFormData, formData = {}, patien
                     return <>
                         <div className="form-group has-feedback formio-component formio-component-number formio-component-number">
                             <p className="col-form-label">{e.label} {e.validate.required ? <span className="field-required"></span> : ""}</p>
-                            <input className="form-control" required={e.validate.required} defaultValue={patientData ? patientData[e.key] : ""} onChange={el => handleChange(el.target.value, e.key)}></input>
+                            <input className="form-control" required={e.validate.required} defaultValue={patientData ? patientData[e.key] : e.defaultValue || ""} onChange={el => handleChange(el.target.value, e.key)}></input>
                         </div>
                     </>
 
@@ -100,7 +100,7 @@ const NestedDataComponent = ({ components, updateFormData, formData = {}, patien
                     return <>
                         <div className="form-group has-feedback formio-component formio-component-password formio-component-password  required">
                             <p className="col-form-label">{e.label} {e.validate.required ? <span className="field-required"></span> : ""}</p>
-                            <input className="form-control" required={e.validate.required} defaultValue={patientData ? patientData[e.key] : ""} onChange={el => handleChange(el.target.value, e.key)}></input>
+                            <input className="form-control" required={e.validate.required} defaultValue={patientData ? patientData[e.key] : e.defaultValue || ""} onChange={el => handleChange(el.target.value, e.key)}></input>
                         </div>
                     </>
 
@@ -109,7 +109,7 @@ const NestedDataComponent = ({ components, updateFormData, formData = {}, patien
                         <div className="form-group has-feedback formio-component formio-component-select formio-component-select">
                             <p className="col-form-label">{e.label} {e.validate.required ? <span className="field-required"></span> : ""}</p>
                             <div className="choices form-group formio-choices">
-                                <select className="form-control ui fluid selection dropdown" required={e.validate.required} defaultValue={patientData ? patientData[e.key] : ""} onChange={el => handleChange(el.target.value, e.key)}>
+                                <select className="form-control ui fluid selection dropdown" required={e.validate.required} defaultValue={patientData ? patientData[e.key] : e.defaultValue || ""} onChange={el => handleChange(el.target.value, e.key)}>
 
                                     {e.data.values.map((ele, i) =>
                                         <option value={ele.value}>{ele.label}</option>
@@ -128,7 +128,7 @@ const NestedDataComponent = ({ components, updateFormData, formData = {}, patien
                                     {e.values.map((ele, i) =>
 
                                         <label className="form-check-label label-position-right">
-                                            <input type="checkbox" className="form-check-input" name={e.id} required={e.validate.required} value={ele.value} defaultValue={patientData ? patientData[e.key] : ""} onChange={el => handleCheck(el.target.value, e.key)} />  {ele.label}
+                                            <input type="checkbox" className="form-check-input" name={e.id} required={e.validate.required} value={ele.value} defaultValue={patientData ? patientData[e.key] : e.defaultValue || ""} onChange={el => handleCheck(el.target.value, e.key)} />  {ele.label}
                                         </label>
 
                                     )}
@@ -253,7 +253,7 @@ const NestedDataComponent = ({ components, updateFormData, formData = {}, patien
 
                 case "panel":
                     return <div className="mb-2 card border">
-                        <p className={`card-header bg-${e.theme} mb-0 card-title text-light`}>{e.title}</p>
+                        <p className={`card-header bg-${e.theme} mb-0 card-title text-black`}>{e.title}</p>
                         <NestedDataComponent components={e.components} updateFormData={updateFormData} formData={formData} patientData={patientData} />
                     </div>
 

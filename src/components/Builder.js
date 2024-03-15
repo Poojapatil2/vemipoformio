@@ -15,11 +15,14 @@ const Builder = () => {
   // const myRef = useRef(null);
   // json for the form builder components
   const [jsonSchema, setSchema] = useState({
-    components: []
+    components: [],
+    
   });
   const [showModal, setShowModal] = useState(false);
   const [formName, setFormName] = useState("");
-  const [customData, setCustomData] = useState({});
+  const [customData, setCustomData] = useState({
+    userType: "userDefine"
+  });
   const [loading, setLoading] = useState(true); // Added loading state
   const [textInput, setTextInput] = useState('');
   const [dropdownValue, setDropdownValue] = useState('');
@@ -28,7 +31,7 @@ const Builder = () => {
   const [textAreaValue, setTextAreaValue] = useState('');
   const [numberValue, setNumberValue] = useState('');
   const [modalClosed, setModalClosed] = useState(false);
-  const [flag, setFlag] = useState("")
+  const [flag, setFlag] = useState("");
 
   const dropdownOptions = [
     { value: 'textfield', label: 'Text Field' },
@@ -121,7 +124,8 @@ const handleCheckboxChange = (e, value) => {
               label: item.title,
               input: true,
               defaultValue: item.defaultValue,
-              html: htmlValue
+              html: htmlValue,
+              hideLabel: true,
             }
           };
         });
@@ -161,6 +165,7 @@ const handleCheckboxChange = (e, value) => {
       })
   }
 
+
   const postData = (body) => {
     console.log("body", body)
     axios.post(`http://3.23.40.210:8081/form/constants`, body)
@@ -186,6 +191,7 @@ const handleCheckboxChange = (e, value) => {
     // }
     let defaultValueToSend = defaultValue; // Default value if dropdownValue is not 'content'
     let body = {};
+    
 
     if (dropdownValue === "content" && defaultImage) {
       // Convert defaultImage to base64
@@ -196,7 +202,7 @@ const handleCheckboxChange = (e, value) => {
           dataType: dropdownValue,
           title: textInput,
           defaultValue: base64String,
-          fieldKey: textInput.trim().toLowerCase().replace(/\s+/g, '')
+          fieldKey: textInput.trim().toLowerCase().replace(/\s+/g, ''),
         };
         postData(body);
       };
@@ -206,7 +212,7 @@ const handleCheckboxChange = (e, value) => {
           dataType: dropdownValue,
           title: textInput,
           defaultValue: textAreaValue,
-          fieldKey: textInput.trim().toLowerCase().replace(/\s+/g, '')
+          fieldKey: textInput.trim().toLowerCase().replace(/\s+/g, ''),
         }
         postData(body);
     } else if(dropdownValue === "select") {
@@ -214,7 +220,7 @@ const handleCheckboxChange = (e, value) => {
           dataType: dropdownValue,
           title: textInput,
           defaultValue: selectValues,
-          fieldKey: textInput.trim().toLowerCase().replace(/\s+/g, '')
+          fieldKey: textInput.trim().toLowerCase().replace(/\s+/g, ''),
         }
         postData(body);
     } else if(dropdownValue === "checkbox") { 
@@ -222,7 +228,7 @@ const handleCheckboxChange = (e, value) => {
           dataType: dropdownValue,
           title: textInput,
           defaultValue: checkboxValues,
-          fieldKey: textInput.trim().toLowerCase().replace(/\s+/g, '')
+          fieldKey: textInput.trim().toLowerCase().replace(/\s+/g, ''),
         }
         postData(body);
     }
@@ -231,7 +237,7 @@ const handleCheckboxChange = (e, value) => {
           dataType: dropdownValue,
           title: textInput,
           defaultValue: radioValue,
-          fieldKey: textInput.trim().toLowerCase().replace(/\s+/g, '')
+          fieldKey: textInput.trim().toLowerCase().replace(/\s+/g, ''),
         }
         postData(body);
       } else if(dropdownValue === 'number') {
@@ -239,7 +245,7 @@ const handleCheckboxChange = (e, value) => {
             dataType: dropdownValue,
             title: textInput,
             defaultValue: numberValue,
-            fieldKey: textInput.trim().toLowerCase().replace(/\s+/g, '')
+            fieldKey: textInput.trim().toLowerCase().replace(/\s+/g, ''),
           }
           postData(body);
       } else {
@@ -247,7 +253,7 @@ const handleCheckboxChange = (e, value) => {
         dataType: dropdownValue,
         title: textInput,
         defaultValue: defaultValueToSend,
-        fieldKey: textInput.trim().toLowerCase().replace(/\s+/g, '')
+        fieldKey: textInput.trim().toLowerCase().replace(/\s+/g, ''),
       };
       postData(body);
     }  

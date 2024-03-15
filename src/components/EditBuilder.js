@@ -84,7 +84,8 @@ const EditBuilder = () => {
               label: item.title,
               input: true,
               defaultValue: item.defaultValue,
-              html: htmlValue
+              html: htmlValue,
+              hideLabel: true,
             }
           };
         });
